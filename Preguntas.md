@@ -11,6 +11,10 @@ características.
 # Cortex M
 1. Describa brevemente las diferencias entre las familias de procesadores Cortex M0, M3 y
 M4.
+
+Para describir las diferencias entre las distintas familias de procesadores se tuvieron en cuentas los siguientes aspectos:
+- Set de instrucciones: Los Cortex-M0 y Cortex-M0+ soportan 56 instrucciones, la mayoría de 16 bits.
+- 
 2. ¿Por qué se dice que el set de instrucciones Thumb permite mayor densidad de código?
 Explique
 3. ¿Qué entiende por arquitectura load-store? ¿Qué tipo de instrucciones no posee este
