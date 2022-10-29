@@ -23,8 +23,12 @@ Para describir las diferencias entre las distintas familias de procesadores se t
 
 2. ¿Por qué se dice que el set de instrucciones Thumb permite mayor densidad de código?
 Explique
+
+- Porque al ser instrucciones de 16 bits, se necesita menos memoria para realizar una misma tarea que con instrucciones de 32 bits.
+
 3. ¿Qué entiende por arquitectura load-store? ¿Qué tipo de instrucciones no posee este
 tipo de arquitectura?
+- Una arquitectura load store es aquella en la que los datos deben ser cargados desde la memoria antes de poder procesarlos, y deben volver a escribirse en la memoria una vez procesados.
 4. ¿Cómo es el mapa de memoria de la familia?
 5. ¿Qué ventajas presenta el uso de los “shadowed pointers” del PSP y el MSP?
 6. Describa los diferentes modos de privilegio y operación del Cortex M, sus relaciones y
