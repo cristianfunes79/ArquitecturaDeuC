@@ -29,7 +29,15 @@ Explique
 3. ¿Qué entiende por arquitectura load-store? ¿Qué tipo de instrucciones no posee este
 tipo de arquitectura?
 - Una arquitectura load store es aquella en la que los datos deben ser cargados desde la memoria a un registro antes de poder procesarlos, y deben volver a escribirse en la memoria una vez procesados.
-4. ¿Cómo es el mapa de memoria de la familia?
+4. ¿Cómo es el mapa de memoria de la familia? 
+
+- Los Cortex-M tienen una memoria con un espacio de direcciones lineal de 4GB (ya que cuentan con direccionamiento de 32bits). Este espacio de memoria se divide en varias regiones predefinidas para ser utilizadas como regiones de memoria o para periféricos. Esto permite que el procesador pueda ser diseñado para una mejor performance. Por ejemplo, los procesadores Cortex-M3 y Cortex-M4 tienen múltiples interfaces de bus para permitir el acceso simultáneo a la región de memoria de programa y a la región de memoria SRAM o de periféricos. También cuenta opcionalmente con una zona de memoria denominada bit banding. Cuando se incluye esta funcionalidad, aparecen 2 zonas de memoria de 1MB que son direccionables de a 1 bit. Los 4GB de memoria se particionan en:
+- a. Acceso a código de programa (por ej. region CODE)
+- b. Acceso a datos (por ej. region SRAM)
+- c. Periféricos
+- d. Registros de control internos y de debug del procesador (por ej. Private Peripheral Bus)
+
+
 5. ¿Qué ventajas presenta el uso de los “shadowed pointers” del PSP y el MSP?
 6. Describa los diferentes modos de privilegio y operación del Cortex M, sus relaciones y
 como se conmuta de uno al otro. Describa un ejemplo en el que se pasa del modo
