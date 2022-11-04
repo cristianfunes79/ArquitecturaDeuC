@@ -30,8 +30,7 @@ Explique
 tipo de arquitectura?
 - Una arquitectura load store es aquella en la que los datos deben ser cargados desde la memoria a un registro antes de poder procesarlos, y deben volver a escribirse en la memoria una vez procesados.
 4. ¿Cómo es el mapa de memoria de la familia? 
-
-- Los Cortex-M tienen una memoria con un espacio de direcciones lineal de 4GB (ya que cuentan con direccionamiento de 32bits). Este espacio de memoria se divide en varias regiones predefinidas para ser utilizadas como regiones de memoria o para periféricos. Esto permite que el procesador pueda ser diseñado para una mejor performance. Por ejemplo, los procesadores Cortex-M3 y Cortex-M4 tienen múltiples interfaces de bus para permitir el acceso simultáneo a la región de memoria de programa y a la región de memoria SRAM o de periféricos. También cuenta opcionalmente con una zona de memoria denominada bit banding. Cuando se incluye esta funcionalidad, aparecen 2 zonas de memoria de 1MB que son direccionables de a 1 bit. Los 4GB de memoria se particionan en:
+Los Cortex-M tienen una memoria con un espacio de direcciones lineal de 4GB (ya que cuentan con direccionamiento de 32bits). Este espacio de memoria se divide en varias regiones predefinidas para ser utilizadas como regiones de memoria o para periféricos. Esto permite que el procesador pueda ser diseñado para una mejor performance. Por ejemplo, los procesadores Cortex-M3 y Cortex-M4 tienen múltiples interfaces de bus para permitir el acceso simultáneo a la región de memoria de programa y a la región de memoria SRAM o de periféricos. También cuenta opcionalmente con una zona de memoria denominada bit banding. Cuando se incluye esta funcionalidad, aparecen 2 zonas de memoria de 1MB que son direccionables de a 1 bit. Los 4GB de memoria se particionan en:
 - a. Acceso a código de programa (por ej. region CODE)
 - b. Acceso a datos (por ej. region SRAM)
 - c. Periféricos
@@ -39,6 +38,16 @@ tipo de arquitectura?
 
 
 5. ¿Qué ventajas presenta el uso de los “shadowed pointers” del PSP y el MSP?
+La ventaja de usar "shadowed pointers" es que tenemos 2 stack pointers disponibles: 
+- El MSP (Main Stack Pointer): es el stack pointer por defecto. Se usa en Thread mode cuando el bit CONTROL[1] (SPSEL) = 0, y se usa siempre en modo Handler.
+- El PSP (Processor Stack Pointer): se usa en modo Thread cuando SPSEL = 1.\
+
+En sistemas con un SO o RTOS, los exception handlers usan el MSP, mientras que las tareas de aplicacion usan el PSP. Cada tarea de aplicación tiene su propio espacio de stack, y el codigo encargado del cambio de contexto en el SO actualiza el PSP cada vez que se produce un cambio de contexto. En estos casos, el uso de shadowed pointers tiene los siguientes beneficios:
+- Si una aplicacion tiene algún problema que corrompe el stack, el stack utilizado por el SO y por otras tareas permanece intacto, mejorando la robustez del sistema.
+- El espacio de stack de cada tarea solo tiene que cubrir el máximo stack + 1 nivel de stack frame (maximo 9 words incluyendo padding en Cortex-M3 o Cortex-M4 sin FPU, o máximo 27 words en Cortex-M4 con FPU). El stack necesario para las ISR y nested interrupt handling se reserva en el main stack solamente.
+- Hace más fácil crear un SO eficiente para los procesadores Cortex-M.
+- Un SO también puede utilizar la MPU para definir la region del stack que puede usar una tarea de aplicacion.
+
 6. Describa los diferentes modos de privilegio y operación del Cortex M, sus relaciones y
 como se conmuta de uno al otro. Describa un ejemplo en el que se pasa del modo
 privilegiado a no priviligiado y nuevamente a privilegiado.
