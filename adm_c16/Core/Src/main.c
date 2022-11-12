@@ -63,6 +63,35 @@ static void MX_USART3_UART_Init(void);
 static void MX_USB_OTG_FS_PCD_Init(void);
 /* USER CODE BEGIN PFP */
 
+/*
+ * @brief 	Inicializa un array con 0's
+ * @param 	vector array que se va a inicializar
+ * @param 	longitud longitud del array a inicializar
+ * @retval 	None
+ */
+void zeros(uint32_t* vector, uint32_t longitud)
+{
+	for (uint32_t i=0; i<longitud; ++i)
+	{
+		vector[i] = 0;
+	}
+}
+
+/*
+ * @brief	Realiza el producto de un vector por un escalar
+ * @param 	vectorIn Array con los datos de entrada
+ * @param 	vectorOut Array donde se almacena el resultado
+ * @param 	longitud Longitud del array
+ * @param 	escalar Valor escalar por el que se va a multiplicar vectorIn
+ */
+void productoEscalar32(uint32_t* vectorIn, uint32_t* vectorOut, uint32_t longitud, uint32_t escalar)
+{
+	for (uint32_t i=0; i<longitud; ++i)
+	{
+		vectorOut[i] = escalar * vectorIn[i];
+	}
+}
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -158,6 +187,16 @@ int main(void)
   PrivilegiosSVC ();
 
   const uint32_t Resultado = asm_sum (5, 3);
+
+  uint32_t data_in[10]={0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF};
+  uint32_t data_out[10]={0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF};
+
+  zeros(data_in, 10);
+  zeros(data_out, 10);
+
+  for (uint32_t i=0; i<10; ++i) data_in[i] = i;
+
+  productoEscalar32(data_in, data_out, 10, 2);
   /* USER CODE END 2 */
 
   /* Infinite loop */

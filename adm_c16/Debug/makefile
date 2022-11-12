@@ -63,8 +63,8 @@ all: main-build
 main-build: adm_c16.elf secondary-outputs
 
 # Tool invocations
-adm_c16.elf adm_c16.map: $(OBJS) $(USER_OBJS) /home/cfunes/CESE/Arquitectura/adm_c16/STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "adm_c16.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/cfunes/CESE/Arquitectura/adm_c16/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="adm_c16.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+adm_c16.elf adm_c16.map: $(OBJS) $(USER_OBJS) /home/cfunes/CESE/Arquitectura/ArquitecturaDeuC/adm_c16/STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "adm_c16.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/cfunes/CESE/Arquitectura/ArquitecturaDeuC/adm_c16/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="adm_c16.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
