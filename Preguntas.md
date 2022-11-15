@@ -83,8 +83,18 @@ El uso de instrucciones IT (IF-THEN) puede ayudar a mejorar la performance del c
 
 
 11. Describa la secuencia de reset del microprocesador.
+
+En un microcontrolador Cortex-M, puede haber 3 tipos de reset:
+- Power on reset: se resetea todo en el microcontrolador. Esto incluye el procesador y su bloque de debug y periféricos.
+- Sytem reset: se resetea solamente el procesador y los periféricos, pero no el bloque de debug del procesador.
+- Processor reset: se resetea el procesador solamente.
+Luego de un reset y antes de que el procesador comience a ejecutar código, el Cortex-M lee las primeras 2 palabras de la memoria. El comienzo de la memoria contiene la tabla de vectores, y los primeros 2 valores de la tabla de vectores son el valor inicial del MSP y el vector de reset, que es la dirección inicial del reset handler. Luego de que estas 2 palabras son leídas por el procesador, el mismo setea el MSP y el PC con estos valores.
+El seteo del MSP es necesario porque algunas excepciones como la NMI o el HardFault se pueden producir apenas se salga del reset, y el MSP va a ser necesario en ese caso para pushear algunos datos del estado del procesador antes de atender la excepción.
+
 12. ¿Qué entiende por “core peripherals”? ¿Qué diferencia existe entre estos y el resto de
 los periféricos?
+
+
 13. ¿Cómo se implementan las prioridades de las interrupciones? Dé un ejemplo
 14. ¿Qué es el CMSIS? ¿Qué función cumple? ¿Quién lo provee? ¿Qué ventajas aporta?
 15. Cuando ocurre una interrupción, asumiendo que está habilitada ¿Cómo opera el
