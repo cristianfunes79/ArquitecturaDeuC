@@ -68,8 +68,12 @@ Por defecto, los procesadores Cortex-M arrancan en modo Thread privilegiado y en
     - Una vez que se atiende la excepcion, se retorna a modo Thread no privilegiado.
 
 7. ¿Qué se entiende por modelo de registros ortogonal? Dé un ejemplo
-8. ¿Qué ventajas presenta el uso de intrucciones de ejecución condicional (IT)? Dé un
-ejemplo
+Los registros son ortogonales cuando cualquier instrucción aplicable a un registro es igualmente aplicable a otro registro. En los ARMv7, los registros r0 a r12 son ortogonales. 
+    - Ej: MOV R4, R0; Copy value from R0 to R4
+    
+8. ¿Qué ventajas presenta el uso de intrucciones de ejecución condicional (IT)? Dé un ejemplo
+El uso de instrucciones IT (IF-THEN) puede ayudar a mejorar la performance del código significativamente porque evita algunas de las penalidades de las instrucciones de salto, y también reduce el número de instrucciones de salto. Por ejemplo, un bloque corto de código IF-THEN-ELSE que normalmente requiere de un salto condicional puede ser reemplazado por una simple instrucción IT.
+
 9. Describa brevemente las excepciones más prioritarias (reset, NMI, Hardfault).
 10. Describa las funciones principales de la pila. ¿Cómo resuelve la arquitectura el llamado
 a funciones y su retorno?
