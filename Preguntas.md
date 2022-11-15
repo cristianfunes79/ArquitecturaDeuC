@@ -75,8 +75,13 @@ Los registros son ortogonales cuando cualquier instrucción aplicable a un regis
 El uso de instrucciones IT (IF-THEN) puede ayudar a mejorar la performance del código significativamente porque evita algunas de las penalidades de las instrucciones de salto, y también reduce el número de instrucciones de salto. Por ejemplo, un bloque corto de código IF-THEN-ELSE que normalmente requiere de un salto condicional puede ser reemplazado por una simple instrucción IT.
 
 9. Describa brevemente las excepciones más prioritarias (reset, NMI, Hardfault).
-10. Describa las funciones principales de la pila. ¿Cómo resuelve la arquitectura el llamado
-a funciones y su retorno?
+- Reset: La excepción de reset se ejecuta tan pronto como el procesador sale del estado de reset. En algunos casos el reset handler puede contener código de inicialización de hardware.
+- NMI: es similar a una IRQ, pero no puede ser deshabilitada y tiene el nivel más alto de prioridad (después de la excepción de reset). Es muy útil en sistemas críticos como control industrial o automotive. Dependiendo del diseño del microcontrolador, el NMI puede ser usado para power failure handling, o puede estar conectado a un watchdog para resetear el sistema si el mismo dejó de responder. Como el NMI no puede ser deshabilitado mediante ningún registro de control, la responsividad está garantizada.
+- HardFault: es una excepción dedicada al manejo de condiciones de falla durante la ejecución de un programa. Esta condición de falla puede ser tratar de ejecutar un op code desconocido, una falla en el bus o en la memoria, u operaciones no permitidas.
+
+10. Describa las funciones principales de la pila. ¿Cómo resuelve la arquitectura el llamado a funciones y su retorno?
+
+
 11. Describa la secuencia de reset del microprocesador.
 12. ¿Qué entiende por “core peripherals”? ¿Qué diferencia existe entre estos y el resto de
 los periféricos?
