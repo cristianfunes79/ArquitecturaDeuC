@@ -78,6 +78,20 @@ void zeros(uint32_t* vector, uint32_t longitud)
 }
 
 /*
+ * @brief 	Inicializa un array con 0's
+ * @param 	vector array que se va a inicializar
+ * @param 	longitud longitud del array a inicializar
+ * @retval 	None
+ */
+void zeros16(uint16_t* vector, uint32_t longitud)
+{
+	for (uint32_t i=0; i<longitud; ++i)
+	{
+		vector[i] = 0;
+	}
+}
+
+/*
  * @brief	Realiza el producto de un vector por un escalar
  * @param 	vectorIn Array con los datos de entrada
  * @param 	vectorOut Array donde se almacena el resultado
@@ -89,6 +103,36 @@ void productoEscalar32(uint32_t* vectorIn, uint32_t* vectorOut, uint32_t longitu
 	for (uint32_t i=0; i<longitud; ++i)
 	{
 		vectorOut[i] = escalar * vectorIn[i];
+	}
+}
+
+/*
+ * @brief	Realiza el producto de un vector por un escalar
+ * @param 	vectorIn Array con los datos de entrada
+ * @param 	vectorOut Array donde se almacena el resultado
+ * @param 	longitud Longitud del array
+ * @param 	escalar Valor escalar por el que se va a multiplicar vectorIn
+ */
+void productoEscalar16(uint16_t* vectorIn, uint16_t* vectorOut, uint32_t longitud, uint16_t escalar)
+{
+	for (uint32_t i=0; i<longitud; ++i)
+	{
+		vectorOut[i] = escalar * vectorIn[i];
+	}
+}
+
+/*
+ * @brief	Realiza el producto de un vector por un escalar saturando el resultado a 12bits
+ * @param 	vectorIn Array con los datos de entrada
+ * @param 	vectorOut Array donde se almacena el resultado
+ * @param 	longitud Longitud del array
+ * @param 	escalar Valor escalar por el que se va a multiplicar vectorIn
+ */
+void productoEscalar12(uint16_t* vectorIn, uint16_t* vectorOut, uint32_t longitud, uint16_t escalar)
+{
+	for (uint32_t i=0; i<longitud; ++i)
+	{
+		vectorOut[i] = (escalar * vectorIn[i] <= 4095) ? escalar * vectorIn[i] : 4095;
 	}
 }
 
@@ -197,6 +241,24 @@ int main(void)
   for (uint32_t i=0; i<10; ++i) data_in[i] = i;
 
   productoEscalar32(data_in, data_out, 10, 2);
+
+  // Prueba producto escalar 16 -------------------
+  uint16_t data_in16[10]={0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF};
+  uint16_t data_out16[10]={0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF,0xFFFF};
+  zeros16(data_in16, 10);
+  zeros16(data_out16, 10);
+
+  for (uint32_t i=0; i<10; ++i) data_in16[i] = i;
+
+  productoEscalar16(data_in16, data_out16, 10, 2);
+
+  // Prueba producto escalar 12 -------------------
+  zeros16(data_in16, 10);
+  zeros16(data_out16, 10);
+
+  for (uint32_t i=0; i<10; ++i) data_in16[i] = i;
+
+  productoEscalar12(data_in16, data_out16, 10, 2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
