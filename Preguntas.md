@@ -92,7 +92,8 @@ Luego de un reset y antes de que el procesador comience a ejecutar código, el C
 El seteo del MSP es necesario porque algunas excepciones como la NMI o el HardFault se pueden producir apenas se salga del reset, y el MSP va a ser necesario en ese caso para pushear algunos datos del estado del procesador antes de atender la excepción.
 
 12. ¿Qué entiende por “core peripherals”? ¿Qué diferencia existe entre estos y el resto de
-los periféricos?
+los periféricos?\
+Los core peripherals son los periféricos propios del procesador y son definidos por ARM. Los "device peripherals" son periféricos del SoC y dependen de cada fabricante (múltiples dispositivos de un mismo fabricante pueden o no tener los mismos periféricos).
 
 
 13. ¿Cómo se implementan las prioridades de las interrupciones? Dé un ejemplo
