@@ -97,7 +97,25 @@ Los core peripherals son los periféricos propios del procesador y son definidos
 
 
 13. ¿Cómo se implementan las prioridades de las interrupciones? Dé un ejemplo
-14. ¿Qué es el CMSIS? ¿Qué función cumple? ¿Quién lo provee? ¿Qué ventajas aporta?
+14. ¿Qué es el CMSIS? ¿Qué función cumple? ¿Quién lo provee? ¿Qué ventajas aporta?\
+CMSIS es la Interfaz de Software Standard de los Microcontroladores Cortex, y se utiliza para estandarizar las funciones de acceso a las funcionalidades del microcontrolador.\
+CMSIS fue desarrollada por ARM para permitir que los fabricantes de microcontroladores y de software utilicen una infraestructura de software consistente para desarrollar soluciones de software para los Cortex-M. Actualmente el mercado de los mircocontroladores Cortex-M abarca:
+- Más de 15 vendedores de microcontroladores Cortex-M, con algunos venderores que proveen FPGA y ASICs basados en Cortex-M.
+- Más de 10 proveedores de toolchains.
+- Más de 30 SO embebidos.
+- Middleware para stacks, protocolos de comunicación, etc.\
+Con este gran ecosistema se hace necesario contar con alguna forma de estandarización de la infraestructura de software, para mejorar la compatibilidad del software entre los distintos fabricantes y herramientas. También es importante mejorar la reusabilidad del software para reducir los tiempos de desarrollo y disminuir los riesgos de fallas. Por ejemplo, un desarrollo de software embebido puede incluir codigo de distintas fuentes:
+- Software desarrollado por "in house" developers.
+- Software reutilizado de otros proyectos.
+- Device drivers desarrollados por los vendedores del microcontrolador.
+- SO embebido.
+- Otras bibliotecas de terceros.\
+En todos estos escenarios la interoperabilidad de los distintos componentes de software se vuelve crítca. Es por todo esto que ARM trabajó con distintos vendedores de microcontroladores, desarrolladores de herramientas y de soluciones de software para desarrollar CMSIS, un framework que abarca la mayoría de los procesadores Cortex-M. CMSIS es un proyecto que continúa evolucionando y que consta actualmente de varios proyectos:
+- CMSIS Core, to access features of Cortex-M processors.
+- CMSIS DSP Library, to create DSP applications easily.
+- CMSIS SVD, an XML based file format to describe peripheral set in microcontroller products.
+- CMSIS RTOS, an API specification for embedded OS.
+- CMSIS DAP, a reference design for a debug interface adaptor.
 15. Cuando ocurre una interrupción, asumiendo que está habilitada ¿Cómo opera el
 microprocesador para atender a la subrutina correspondiente? Explique con un ejemplo
 17. ¿Cómo cambia la operación de stacking al utilizar la unidad de punto flotante?
