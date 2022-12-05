@@ -29,7 +29,7 @@ Explique
 3. ¿Qué entiende por arquitectura load-store? ¿Qué tipo de instrucciones no posee este
 tipo de arquitectura?
 - Una arquitectura load store es aquella en la que los datos deben ser cargados desde la memoria a un registro antes de poder procesarlos, y deben volver a escribirse en la memoria una vez procesados.
-4. ¿Cómo es el mapa de memoria de la familia? 
+4. ¿Cómo es el mapa de memoria de la familia?\
 Los Cortex-M tienen una memoria con un espacio de direcciones lineal de 4GB (ya que cuentan con direccionamiento de 32bits). Este espacio de memoria se divide en varias regiones predefinidas para ser utilizadas como regiones de memoria o para periféricos. Esto permite que el procesador pueda ser diseñado para una mejor performance. Por ejemplo, los procesadores Cortex-M3 y Cortex-M4 tienen múltiples interfaces de bus para permitir el acceso simultáneo a la región de memoria de programa y a la región de memoria SRAM o de periféricos. También cuenta opcionalmente con una zona de memoria denominada bit banding. Cuando se incluye esta funcionalidad, aparecen 2 zonas de memoria de 1MB que son direccionables de a 1 bit. Los 4GB de memoria se particionan en:
 - a. Acceso a código de programa (por ej. region CODE)
 - b. Acceso a datos (por ej. region SRAM)
@@ -50,7 +50,8 @@ En sistemas con un SO o RTOS, los exception handlers usan el MSP, mientras que l
 
 6. Describa los diferentes modos de privilegio y operación del Cortex M, sus relaciones y
 como se conmuta de uno al otro. Describa un ejemplo en el que se pasa del modo
-privilegiado a no priviligiado y nuevamente a privilegiado.
+privilegiado a no priviligiado y nuevamente a privilegiado.\
+\
 Los Cortex-M tienen 2 estados de operación y 2 modos. Además, los procesadores pueden tener niveles de acceso privilegiado y no provilegiado. El nivel de acceso privilegiado puede acceder a todos los recursos del procesador, mientras que el no privilegiado tiene algunas zonas de memoria no accesibles, y algunas operaciones no disponibles. El nivel de acceso no privilegiado no está disponible en los Cortex-M0 y es opcional en los Cortex-M0+.
 * Estados de operación: 
     - Estado de Debug: Cuando el procesador es detenido (por ejemplo por un debuggger, o porque alcanza un breakpoint), entra en estado de Debug y deja de ejecutar instrucciones.
@@ -71,7 +72,8 @@ Por defecto, los procesadores Cortex-M arrancan en modo Thread privilegiado y en
 Los registros son ortogonales cuando cualquier instrucción aplicable a un registro es igualmente aplicable a otro registro. En los ARMv7, los registros r0 a r12 son ortogonales. 
     - Ej: MOV R4, R0; Copy value from R0 to R4
     
-8. ¿Qué ventajas presenta el uso de intrucciones de ejecución condicional (IT)? Dé un ejemplo
+8. ¿Qué ventajas presenta el uso de intrucciones de ejecución condicional (IT)? Dé un ejemplo\
+\
 El uso de instrucciones IT (IF-THEN) puede ayudar a mejorar la performance del código significativamente porque evita algunas de las penalidades de las instrucciones de salto, y también reduce el número de instrucciones de salto. Por ejemplo, un bloque corto de código IF-THEN-ELSE que normalmente requiere de un salto condicional puede ser reemplazado por una simple instrucción IT.
 
 9. Describa brevemente las excepciones más prioritarias (reset, NMI, Hardfault).
