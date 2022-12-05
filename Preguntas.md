@@ -81,8 +81,15 @@ El uso de instrucciones IT (IF-THEN) puede ayudar a mejorar la performance del c
 - NMI: es similar a una IRQ, pero no puede ser deshabilitada y tiene el nivel más alto de prioridad (después de la excepción de reset). Es muy útil en sistemas críticos como control industrial o automotive. Dependiendo del diseño del microcontrolador, el NMI puede ser usado para power failure handling, o puede estar conectado a un watchdog para resetear el sistema si el mismo dejó de responder. Como el NMI no puede ser deshabilitado mediante ningún registro de control, la responsividad está garantizada.
 - HardFault: es una excepción dedicada al manejo de condiciones de falla durante la ejecución de un programa. Esta condición de falla puede ser tratar de ejecutar un op code desconocido, una falla en el bus o en la memoria, u operaciones no permitidas.
 
-10. Describa las funciones principales de la pila. ¿Cómo resuelve la arquitectura el llamado a funciones y su retorno?
-
+10. Describa las funciones principales de la pila. ¿Cómo resuelve la arquitectura el llamado a funciones y su retorno?\
+\
+Como en la mayoría de los procesadores, los Cortex-M necesitan memoria de stack para operar y tener stack pointers (R13). El stack es un tipo de mecanismo de memoria que permiet utilizar una porcion de memoria como memoria LIFO (Last In First Out). Los procesadores ARM utilizan la memoria principal del sistema para operar con el stack, tienen una instrucción de PUSH para guardar datos en el stack y una instrucción POP para leer datos del stack. El stack se puede utilizar para:
+-   Guardar temporalmente datos cuando una función que se esta ejecuntando necesita usar registros (en el register bank). Estos valores pueden ser recuperados al final de la función por lo que el programa que llamó a dicha función no perderá los datos.
+-   Pasar información a funciones o subrutinas.
+-   Guardar variables locales.
+-   Guardar el estado del procesador y valores de registros en el caso de excepciones como por ej cuando se produce una interrupción.
+Los Cortex-M usan un modelo de stack llamado "Full descending stack".\
+El llamado a funciones y su retorno esta especificado en el Procedure Call Standard. Alli se especifica que función cumple cada uno de los registros durante el llamado a funciones. Los registros r0 a r3 son utilizados para pasar valores de argumentos a una funcion o para devolver un valor de retorno de una función.
 
 11. Describa la secuencia de reset del microprocesador.
 
