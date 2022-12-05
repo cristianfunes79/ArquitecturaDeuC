@@ -89,7 +89,7 @@ Como en la mayoría de los procesadores, los Cortex-M necesitan memoria de stack
 -   Guardar variables locales.
 -   Guardar el estado del procesador y valores de registros en el caso de excepciones como por ej cuando se produce una interrupción.
 Los Cortex-M usan un modelo de stack llamado "Full descending stack".\
-El llamado a funciones y su retorno esta especificado en el Procedure Call Standard. Alli se especifica que función cumple cada uno de los registros durante el llamado a funciones. Los registros r0 a r3 son utilizados para pasar valores de argumentos a una funcion o para devolver un valor de retorno de una función.
+El llamado a funciones y su retorno esta especificado en el AAPCS, Procedure Call Standard. Alli se especifica que función cumple cada uno de los registros durante el llamado a funciones. Los registros r0 a r3 son utilizados para pasar valores de argumentos a una funcion o para devolver un valor de retorno de una función.
 
 11. Describa la secuencia de reset del microprocesador.
 
