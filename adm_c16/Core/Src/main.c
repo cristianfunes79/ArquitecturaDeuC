@@ -63,7 +63,7 @@ static void MX_USART3_UART_Init(void);
 static void MX_USB_OTG_FS_PCD_Init(void);
 /* USER CODE BEGIN PFP */
 
-/*
+/* Ejercicio 1.
  * @brief 	Inicializa un array con 0's
  * @param 	vector array que se va a inicializar
  * @param 	longitud longitud del array a inicializar
@@ -91,7 +91,7 @@ void zeros16(uint16_t* vector, uint32_t longitud)
 	}
 }
 
-/*
+/* Ejercicio 2.
  * @brief	Realiza el producto de un vector por un escalar
  * @param 	vectorIn Array con los datos de entrada
  * @param 	vectorOut Array donde se almacena el resultado
@@ -106,7 +106,7 @@ void productoEscalar32(uint32_t* vectorIn, uint32_t* vectorOut, uint32_t longitu
 	}
 }
 
-/*
+/* Ejercicio 3.
  * @brief	Realiza el producto de un vector por un escalar
  * @param 	vectorIn Array con los datos de entrada
  * @param 	vectorOut Array donde se almacena el resultado
@@ -121,7 +121,7 @@ void productoEscalar16(uint16_t* vectorIn, uint16_t* vectorOut, uint32_t longitu
 	}
 }
 
-/*
+/* Ejercicio 4.
  * @brief	Realiza el producto de un vector por un escalar saturando el resultado a 12bits
  * @param 	vectorIn Array con los datos de entrada
  * @param 	vectorOut Array donde se almacena el resultado
@@ -135,6 +135,127 @@ void productoEscalar12(uint16_t* vectorIn, uint16_t* vectorOut, uint32_t longitu
 		vectorOut[i] = (escalar * vectorIn[i] <= 4095) ? escalar * vectorIn[i] : 4095;
 	}
 }
+
+/* Ejercicio 5.
+ * @brief	Realice una funcion que implemente un filtro de ventana movil de 10 valores sobre un vector de muestras.
+ * @param	vectorIn Array con los datos de entrada
+ * @param 	vectorOut Array donde se almacena el resultado
+ * @param 	longitudVectorIn Longitud del darray
+ */
+void filtroVentana10(uint16_t* vectorIn, uint16_t* vectorOut, uint32_t longitudVectorIn)
+{
+	for (uint32_t i=0; i<longitudVectorIn; ++i)
+	{
+		// para cada indice es necesario tomar 5 muestras a la izquierda y 5 muestras a la derecha
+		// vectorIn = [0][1]...[i-5][i-4][i-3][i-2][i-1][i][i+1][i+2]...[i+5]...[longitudVectorIn-1]
+		uint32_t muestrasIzquierda 	= (i>4) ? 5 : i;
+		uint32_t muestrasDerecha 	= ((longitudVectorIn-1-i)>5) ? 5 : (longitudVectorIn-1-i);
+		uint32_t totalIzquierda = 0;
+		uint32_t totalDerecha = 0;
+
+		for (uint32_t j=1; j<=muestrasIzquierda; ++j)
+		{
+			totalIzquierda += vectorIn[i-j];
+		}
+
+		for (uint32_t j=1; j<=muestrasDerecha; ++j)
+		{
+			totalDerecha += vectorIn[i+j];
+		}
+
+		vectorOut[i] = (totalIzquierda+totalDerecha)/(muestrasIzquierda+muestrasDerecha);
+	}
+}
+
+/* Ejercicio 6.
+ * @brief	Realizar una funcion que reciba un vector de numeros signados de 32bits y los empaquete en otro vector de 16bits.
+ * 			La funcion debera adecuar los valores de entrada a la nueva precision.
+ * @param	vectorIn Array con los datos de entrada
+ * @param 	vectorOut Array con el resultado
+ * @param 	longitud Longitud del array
+ */
+void pack32to16(int32_t* vectorIn, int16_t* vectorOut, uint32_t longitud)
+{
+	for (uint32_t i=0; i<longitud; ++i)
+	{
+		vectorOut[i] = (int16_t) (vectorIn[i]/0x10000);
+	}
+}
+
+/* Ejercicio 7.
+ * @brief	Realizar una funcion que reciba un vector de numeros signados de 32ibts y devuelva la posicion del maximo del vector
+ * @param	vectorIn Array con los datos de entrada
+ * @param 	longitud Longitud del array
+ */
+int32_t max(int32_t* vectorIn, uint32_t longitud)
+{
+	int32_t maximo = vectorIn[0];
+	int32_t posicionMaximo = 0;
+	for (uint32_t i=1; i<longitud; ++i)
+	{
+		if (vectorIn[i] > maximo)
+		{
+			maximo = vectorIn[i];
+			posicionMaximo = i;
+		}
+	}
+
+	return posicionMaximo;
+}
+
+/* Ejercicio 8.
+ * @brief	Realizar una funcion que reciba un vector de muestras signadas de 32bits y lo decime descartando una cada N muestras
+ * @param	vectorIn Array con los datos de entrada
+ * @param 	vectorOut Array resultante
+ * @param	longitud Longitud del array
+ * @param 	N Muestra a descartar
+ */
+void downsampleM(int32_t* vectorIn, int32_t* vectorOut, uint32_t longitud, uint32_t N)
+{
+	uint32_t j=0;
+
+	for (uint32_t i=0; i<longitud; ++i)
+	{
+		if (i%N != 0)
+		{
+			vectorOut[j] = vectorIn[i];
+			j++;
+		}
+	}
+}
+
+/* Ejercicio 9.
+ * @brief	Realizar una funcion que reciba un vector de muestras no signadas de 16bits e invierta su orden
+ * @param 	vector Array de entrada
+ * @param	longitud Longitud del array de entrada
+ */
+void invertir(uint16_t* vector, uint32_t longitud)
+{
+	for (uint32_t i=0; i<longitud/2; ++i)
+	{
+		uint16_t aux = vector[i];
+		vector[i] = vector[longitud-1-i];
+		vector[longitud-1-i] = aux;
+	}
+}
+
+/* Ejercicio 10.
+ * @brief	Realizar una funcion que recibe un vector de 4096 valores de 16bits (signados), que corresponden
+ * 			a muestras de audio tomadas a una tasa de muestreo de 44100muestas/s. La funcion debe introducir
+ * 			un eco de la mitad de la amplitud de la muestra original a los 20ms de comenzada la grabacion.
+ * @param	vector Array de entrada
+ */
+void eco(int16_t* vector)
+{
+	// Para agregar eco se adiciona la senal dividida por 2 y desplazada 20ms.
+	// Como la tasa de muestreo es de 44100 muestras/s, quiere decir que a los 20ms estamos
+	// en la muestra 44100 * 20 / 1000 = 882000/1000 = 882
+	for (uint32_t i=882; i<4096; ++i)
+	{
+		vector[i] = vector[i] + vector[i-882] / 2;
+	}
+}
+
 
 /* USER CODE END PFP */
 
@@ -259,7 +380,10 @@ int main(void)
   for (uint32_t i=0; i<10; ++i) data_in16[i] = i;
 
   productoEscalar12(data_in16, data_out16, 10, 2);
+
+
   /* USER CODE END 2 */
+
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
